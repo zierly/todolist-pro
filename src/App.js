@@ -1,18 +1,31 @@
 /*
  * @Author: 自迩
  * @Date: 2022-06-06 21:01:15
- * @LastEditTime: 2022-06-06 21:14:03
+ * @LastEditTime: 2022-06-06 23:08:32
  * @LastEditors: your name
  * @Description:
  * @FilePath: \todolist\src\App.js
  */
 
 import './App.css';
+import {Link, Routes, Route, Navigate, useNavigate} from 'react-router-dom'
+import HomePage from './pages/homePage';
+import UserInfoPage from './pages/userInfoPage';
+import UserTodoPage from './pages/userTodoPage'
 
 function App() {
   return (
     <div className="App">
+      {/* <Link to = "/userTodoPage">userTodoPage</Link>
+      <Link to = "/userInfoPage">userInfoPage</Link> */}
 
+
+    <Routes>
+      <Route path = "/" element = {<Navigate to = "/homePage"/>}></Route>
+      <Route path = "/homePage" element = {<HomePage/>}></Route>
+      <Route path = "/userTodoPage" element = {<UserTodoPage/>}></Route>
+      <Route path = "/userInfoPage" element = {<UserInfoPage/>}></Route>
+    </Routes>
     </div>
   );
 }
