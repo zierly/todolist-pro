@@ -1,7 +1,7 @@
 /*
  * @Author: 自迩
  * @Date: 2022-06-06 21:23:44
- * @LastEditTime: 2022-06-07 22:28:27
+ * @LastEditTime: 2022-06-08 00:06:27
  * @LastEditors: your name
  * @Description:
  * @FilePath: \todolist\src\pages\homePage\index.jsx
@@ -9,10 +9,16 @@
 import './index.css'
 import React, { useEffect, useState, useLayoutEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
-import axios from 'axios';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+
 
 
 /**
@@ -50,8 +56,10 @@ function stringAvatar(name) {
   return {
     sx: {
       bgcolor: stringToColor(name),
+      margin:'0 auto',
     },
     children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+
   };
 }
 
@@ -75,15 +83,32 @@ export default function HomePage() {
 
   return (
     <div>
-      <div>HomePage</div>
-      <Stack direction="row" spacing={2}>
-        {
-          userList.map( item => {
-            return <Avatar key = {item.id} {...stringAvatar(item.name)}/>
-          })
-        }
+      <Box sx={{ flexGrow: 1}}>
+      <AppBar position="fixed">
+        <Toolbar variant="dense">
+          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+
+          </IconButton>
+          <Typography variant="h6" color="inherit" component="div">
+            Home page
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </Box>
+
+      <h2>User List</h2>
+      <Stack direction="row" spacing={2} sx = {{border: 2, borderColor: 'primary.main', borderRadius: 3, height: 100, paddingTop:'30px'}}>
+          {
+            userList.map( item => {
+              return (<div className='user-box'>
+                        <Avatar key = {item.id} {...stringAvatar(item.name)} />
+                        <div className='user-name'>{item.name}</div>
+                      </div>)
+            })
+          }
       </Stack>
-      <Stack direction="column" spacing={1} >
+      <h2>Todo List</h2>
+      <Stack direction="column" spacing={2} sx = {{border: 1, borderColor: 'secondary.main', borderRadius: 3, paddingTop:'30px', paddingLeft:'30px'}}>
         {
             todosList.map( item => {
               console.log();
