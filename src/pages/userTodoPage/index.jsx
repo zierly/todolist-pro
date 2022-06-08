@@ -1,7 +1,7 @@
 /*
  * @Author: 自迩
  * @Date: 2022-06-06 21:26:30
- * @LastEditTime: 2022-06-08 15:35:31
+ * @LastEditTime: 2022-06-08 22:24:38
  * @LastEditors: your name
  * @Description:
  * @FilePath: \todolist\src\pages\userTodoPage\index.jsx
@@ -9,6 +9,7 @@
 import './index.css'
 import React, {useState,useEffect} from 'react'
 import { useParams, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -18,6 +19,8 @@ import Stack from '@mui/material/Stack';
 import DoneIcon from '@mui/icons-material/Done';
 import Avatar from '@mui/material/Avatar';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import Button from '@mui/material/Button';
+
 
 /**
  * @description: 通过用户名生成不同的颜色
@@ -62,8 +65,13 @@ function stringAvatar(name) {
 export default function UserTodoPage() {
   // let {id} = useParams()
   let {state} = useLocation()
-
+  let navigate = useNavigate()
   console.log(state);
+  function  editInfo(userId){
+    return () => {
+      navigate('/userInfoPage', {state: {userId}})
+    }
+  }
   return (
     <>
       <Box sx={{ flexGrow: 1}}>
@@ -78,6 +86,7 @@ export default function UserTodoPage() {
       <div className='user-box-todopage' >
         <Avatar  {...stringAvatar(state.name)} />
         <span>{state.name}</span>
+        <Button variant="contained" sx = {{marginLeft: '20px'}} onClick = {editInfo(state.id)}>Edit info</Button>
       </div>
 
       <Stack direction="column" spacing={2} sx = {{border: 1, borderColor: 'secondary.main', borderRadius: 3, paddingTop:'30px', paddingLeft:'30px'}}>
@@ -95,7 +104,6 @@ export default function UserTodoPage() {
         })
       }
       </Stack>
-
     </>
 
   )
