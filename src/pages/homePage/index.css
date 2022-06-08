@@ -1,6 +1,7 @@
 
 .user-box{
     flex:1;
+    cursor: pointer;
 }
 .user-name{
     color: gray;

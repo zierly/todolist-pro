@@ -1,0 +1,10 @@
+.user-box-todopage{
+    margin-top: 80px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+.user-box-todopage span{
+    margin-left: 10px;
+    font-size: 20px;
+}
