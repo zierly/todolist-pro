@@ -1,7 +1,7 @@
 /*
  * @Author: 自迩
  * @Date: 2022-06-06 21:01:15
- * @LastEditTime: 2022-06-06 22:46:56
+ * @LastEditTime: 2022-06-09 21:58:54
  * @LastEditors: your name
  * @Description:
  * @FilePath: \todolist\src\index.js
@@ -18,7 +18,6 @@ root.render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-
 
 );
 
