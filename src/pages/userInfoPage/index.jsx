@@ -1,7 +1,7 @@
 /*
  * @Author: 自迩
  * @Date: 2022-06-06 21:25:54
- * @LastEditTime: 2022-06-09 22:30:36
+ * @LastEditTime: 2022-06-10 12:06:46
  * @LastEditors: your name
  * @Description:
  * @FilePath: \todolist\src\pages\userInfoPage\index.jsx
@@ -67,9 +67,12 @@ function stringAvatar(name) {
 
 const theme = createTheme();
 
+let myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,5}$/
 
 export default function UserInfoPage() {
   let [userInfo, setUserInfo] = useState({getData:false})
+  let [userNameCheck, setUserNameCheck] = useState(true)
+  let [emailCheck, setEmailCheck] = useState(true)
   let {state} = useLocation()
   useEffect(() => {
     axios.get(`/users/${state.userId}`).then(value => {
@@ -78,18 +81,45 @@ export default function UserInfoPage() {
       // console.log(userInfo)
     })
   },[])
-  console.log(userInfo);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if(emailCheck && userNameCheck)
+      console.log({
+        username: data.get('username'),
+        email: data.get('email'),
+        adress:{
+          street: data.get('street'),
+          suite: data.get('suite'),
+          city: data.get('city'),
+          zipcode: data.get('zipcode'),
+          geo: {
+            lat: data.get('lat'),
+            lng: data.get('lng'),
+          }
+        },
+        phone: data.get('phone'),
+        website: data.get('website'),
+        company: {
+          name: data.get('companyName'),
+          catchPhrase: data.get('catchPhrase'),
+          bs: data.get('bs'),
+        }
 
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+      });
   };
-
-  console.log('@@@@')
+  const checkUserName = (e) => {
+    // console.log('check name!');
+    let flag = (e.target.value.length < 32)
+    if(flag !== userNameCheck)
+      setUserNameCheck(flag)
+  }
+  const checkEmail = (e) => {
+    // console.log('check email!');
+    let flag = myreg.test(e.target.value)
+    if(flag !== emailCheck)
+      setEmailCheck(flag)
+  }
   return (
     <div>
       <Box sx={{ flexGrow: 1}}>
@@ -127,6 +157,9 @@ export default function UserInfoPage() {
                     id="username"
                     label="username"
                     defaultValue={userInfo.username}
+                    onChange = {checkUserName}
+                    error = {!userNameCheck}
+                    helperText = {!userNameCheck ? 'Username length must be less than 32 characters' : ''}
                   />
                 </Grid>
 
@@ -138,6 +171,9 @@ export default function UserInfoPage() {
                     label="email"
                     name="email"
                     defaultValue={userInfo.email}
+                    onChange = {checkEmail}
+                    error = {!emailCheck}
+                    helperText = {!emailCheck ? 'Email format error, it should be as follows aaa@bbb.ccc' : ''}
                   />
                 </Grid>
 
@@ -147,7 +183,6 @@ export default function UserInfoPage() {
                     fullWidth
                     name="phone"
                     label="phone"
-                    type="phone"
                     id="phone"
                     defaultValue={userInfo.phone}
                   />
@@ -159,7 +194,6 @@ export default function UserInfoPage() {
                     fullWidth
                     name="website"
                     label="website"
-                    type="website"
                     id="website"
                     defaultValue={userInfo.website}
                   />
@@ -169,14 +203,98 @@ export default function UserInfoPage() {
                   <TextField
                     required
                     fullWidth
-                    name="website"
-                    label="website"
-                    type="website"
-                    id="website"
-                    defaultValue={userInfo.website}
+                    name="street"
+                    label="street"
+                    id="street"
+                    defaultValue={userInfo.address.street}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="suite"
+                    label="suite"
+                    id="suite"
+                    defaultValue={userInfo.address.suite}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="city"
+                    label="city"
+                    id="city"
+                    defaultValue={userInfo.address.city}
                   />
                 </Grid>
 
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="zipcode"
+                    label="zipcode"
+                    id="zipcode"
+                    defaultValue={userInfo.address.zipcode}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                <TextField
+                  name="lat"
+                  required
+                  fullWidth
+                  id="lat"
+                  label="lat"
+                  defaultValue={userInfo.address.geo.lat}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name=""
+                  required
+                  fullWidth
+                  id="lng"
+                  label="lng"
+                  defaultValue={userInfo.address.geo.lng}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="companyName"
+                    label="company name"
+                    id="companyName"
+                    defaultValue={userInfo.company.name}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="catchPhrase"
+                    label="catchPhrase"
+                    id="catchPhrase"
+                    defaultValue={userInfo.company.catchPhrase}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="bs"
+                    label="bs"
+                    id="bs"
+                    defaultValue={userInfo.company.bs}
+                  />
+                </Grid>
 
               </Grid>
               <Button
