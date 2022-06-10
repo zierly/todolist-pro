@@ -1,7 +1,7 @@
 /*
  * @Author: 自迩
  * @Date: 2022-06-06 21:23:44
- * @LastEditTime: 2022-06-08 14:36:18
+ * @LastEditTime: 2022-06-10 13:58:11
  * @LastEditors: your name
  * @Description:
  * @FilePath: \todolist\src\pages\homePage\index.jsx
@@ -65,16 +65,15 @@ export default function HomePage() {
   let [todoList, setTodoList] = useState([])
   useLayoutEffect(() => {
     axios.get('/users').then(value => {
-      console.log(value.data);
+      // console.log(value.data);
       setUserList(value.data)
     })
     axios.get('/todos').then(value => {
-      console.log(value.data);
+      // console.log(value.data);
       setTodoList(value.data)
     })
   }, [])
 
-  console.log("@@@");
 
   return (
     <div>
@@ -87,12 +86,18 @@ export default function HomePage() {
         </Toolbar>
       </AppBar>
     </Box>
+      {
+        !(userList.length && todoList.length) ? <></> : (
+          <>
+          <h2>User List</h2>
+          <UserList userList = {userList} todoList = {todoList} stringAvatar = {stringAvatar} />
 
-      <h2>User List</h2>
-      <UserList userList = {userList} todoList = {todoList} stringAvatar = {stringAvatar} />
+          <h2>Todo List</h2>
+          <TodoList userList = {userList} todoList = {todoList} stringAvatar = {stringAvatar}/>
+          </>
+        )
+      }
 
-      <h2>Todo List</h2>
-      <TodoList userList = {userList} todoList = {todoList} stringAvatar = {stringAvatar}/>
 
 
     </div>

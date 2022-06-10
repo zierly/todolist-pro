@@ -1,7 +1,7 @@
 /*
  * @Author: 自迩
  * @Date: 2022-06-06 21:25:54
- * @LastEditTime: 2022-06-10 12:06:46
+ * @LastEditTime: 2022-06-10 13:53:11
  * @LastEditors: your name
  * @Description:
  * @FilePath: \todolist\src\pages\userInfoPage\index.jsx
@@ -15,11 +15,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -81,9 +78,15 @@ export default function UserInfoPage() {
       // console.log(userInfo)
     })
   },[])
+  /**
+   * @description: 处理表单提交
+   * @param {*} event
+   * @return {*}
+   */
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    //若邮箱或用户名不符合规范，则不提交表单
     if(emailCheck && userNameCheck)
       console.log({
         username: data.get('username'),
@@ -108,12 +111,22 @@ export default function UserInfoPage() {
 
       });
   };
+  /**
+   * @description: 检测用户名长度是否符合规范
+   * @param {*} e
+   * @return {*}
+   */
   const checkUserName = (e) => {
     // console.log('check name!');
     let flag = (e.target.value.length < 32)
     if(flag !== userNameCheck)
       setUserNameCheck(flag)
   }
+  /**
+   * @description: 检测邮箱格式是否符合规范
+   * @param {*} e
+   * @return {*}
+   */
   const checkEmail = (e) => {
     // console.log('check email!');
     let flag = myreg.test(e.target.value)

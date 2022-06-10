@@ -1,7 +1,7 @@
 /*
  * @Author: 自迩
  * @Date: 2022-06-06 21:26:30
- * @LastEditTime: 2022-06-08 22:24:38
+ * @LastEditTime: 2022-06-10 13:50:10
  * @LastEditors: your name
  * @Description:
  * @FilePath: \todolist\src\pages\userTodoPage\index.jsx
@@ -66,7 +66,7 @@ export default function UserTodoPage() {
   // let {id} = useParams()
   let {state} = useLocation()
   let navigate = useNavigate()
-  console.log(state);
+  // console.log(state);
   function  editInfo(userId){
     return () => {
       navigate('/userInfoPage', {state: {userId}})
